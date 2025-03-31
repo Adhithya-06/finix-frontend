@@ -48,10 +48,13 @@
   "scripts": {
     "android": "expo run:android",
     "ios": "expo run:ios",
-    "start": "expo start --dev-client"
+    "start": "expo start --dev-client",
+    "build": "expo export:web"
+
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
+    "@expo/webpack-config": "^19.0.1",
     "@react-native-community/cli": "^17.0.0"
   }
 }
