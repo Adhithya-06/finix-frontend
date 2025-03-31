@@ -1,0 +1,25 @@
+{
+  "expo": {
+    "name": "FINIX",
+    "slug": "finix-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/finix-logo.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#8E241F"
+    
+    },
+   
+    "android": {
+      "package": "com.anonymous.frontend"
+    
+    },
+    "ios": {
+      "bundleIdentifier": "com.anonymous.frontend"
+    },
+    "platforms": ["web"]
+  }
+}
+
