@@ -42,17 +42,19 @@ const TransactionsScreen = () => {
         const response = await axios.get("https://finix-backend.onrender.com/transactions");
   
         if (response.status === 200) {
-          setTransactions(response.data); // Load transactions from backend
+          console.log("✅ Received transactions from backend:", response.data); // 👈 Add this
+          setTransactions(response.data);
         } else {
-          console.error("Error fetching transactions:", response.statusText);
+          console.error("❌ Error fetching transactions:", response.statusText);
         }
       } catch (error) {
-        console.error("Error fetching transactions:", error);
+        console.error("❌ Network error while fetching transactions:", error);
       }
     };
   
     loadTransactions();
   }, []);
+  
   
 
   // Delete a transaction

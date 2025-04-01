@@ -108,7 +108,7 @@ const SmartBudgetingScreen = () => {
 
   const fetchTransactions = async () => {
     try {
-      const response = await axios.get("https://finix-app.onrender.com/transactions");
+      const response = await axios.get("https://finix-backend.onrender.com/transactions");
       if (response.status === 200) {
         setTransactions(response.data);
       } else {
