@@ -9,17 +9,24 @@
       "image": "./assets/finix-logo.png",
       "resizeMode": "contain",
       "backgroundColor": "#8E241F"
-    
     },
-   
     "android": {
       "package": "com.anonymous.frontend"
-    
     },
     "ios": {
       "bundleIdentifier": "com.anonymous.frontend"
     },
-    "platforms": ["web"]
+    "platforms": [
+      "web"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "09125214-ceb4-4b78-9f61-b26e157bfb92"
+      }
+    },
+    "runtimeVersion": "1.0.0",
+    "updates": {
+      "url": "https://u.expo.dev/09125214-ceb4-4b78-9f61-b26e157bfb92"
+    }
   }
 }
-
