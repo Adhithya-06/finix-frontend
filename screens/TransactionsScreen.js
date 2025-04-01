@@ -27,41 +27,22 @@ const TransactionsScreen = () => {
   const [forceUpdate, setForceUpdate] = useState(0);
   const [selectedFilterCategory, setSelectedFilterCategory] = useState(""); // Stores selected category for filtering
   const [customCategory, setCustomCategory] = useState(""); // Stores manually entered category
-const [loggedInEmail, setLoggedInEmail] = useState("");
 
-
-
-
-
-
-
+  
 
   const formatSelectedDate = () => {
     return `${selectedYear}-${selectedMonth.toString().padStart(2, "0")}-${selectedDay.toString().padStart(2, "0")}`;
   };
   
-
-  useEffect(() => {
-    const fetchEmail = async () => {
-      const email = await AsyncStorage.getItem("userEmail");
-      if (email) {
-        setLoggedInEmail(email);
-      }
-    };
-    fetchEmail();
-  }, []);
   
-
-
   //  Load Transactions from AsyncStorage when the screen opens
   useEffect(() => {
-    if (!loggedInEmail) return;
-
     const loadTransactions = async () => {
       try {
-        const response = await axios.get(`https://finix-backend.onrender.com/transactions?email=${loggedInEmail}`);
+        const response = await axios.get("https://finix-backend.onrender.com/transactions");
+  
         if (response.status === 200) {
-          setTransactions(response.data);
+          setTransactions(response.data); // Load transactions from backend
         } else {
           console.error("Error fetching transactions:", response.statusText);
         }
@@ -69,36 +50,38 @@ const [loggedInEmail, setLoggedInEmail] = useState("");
         console.error("Error fetching transactions:", error);
       }
     };
-
-    loadTransactions();
-  }, [loggedInEmail]);
   
+    loadTransactions();
+  }, []);
   
 
   // Delete a transaction
   const deleteTransaction = async (transactionId) => {
     try {
       const response = await fetch(`https://finix-backend.onrender.com/delete_transaction/${transactionId}`, { 
-        method: "DELETE",
-      });
 
-      if (!response.ok) {
-        throw new Error("Failed to delete transaction");
-      }
+            method: "DELETE",
+        });
 
-      setTransactions(transactions.filter((t) => t.id !== transactionId));
+        if (!response.ok) {
+            throw new Error("Failed to delete transaction ");
+        }
+
+        // Remove from local state AFTER successful deletion from database
+        setTransactions(transactions.filter((t) => t.id !== transactionId));
+
+        console.log("Transaction deleted successfully!");
     } catch (error) {
-      console.error("Error deleting transaction:", error);
+        console.error("Error deleting transaction:", error);
     }
-  };
+};
 
 //  Add fetchTransactions function RIGHT HERE (after deleteTransaction)
 const fetchTransactions = async () => {
-  if (!loggedInEmail) return;
   try {
-    const response = await fetch(`https://finix-backend.onrender.com/transactions?email=${loggedInEmail}`);
+    const response = await fetch("https://finix-backend.onrender.com/transactions");
     const data = await response.json();
-    setTransactions(data);
+    setTransactions(data); // ✅ Updates state with the latest transactions
   } catch (error) {
     console.error("Error fetching transactions:", error);
   }
@@ -183,7 +166,7 @@ useEffect(() => {
       date: formatSelectedDate(),
       category: finalCategory, // Save either selected category or manually entered category
       amount: parseFloat(amount),
-      user_email: loggedInEmail, 
+
       
     };
     console.log("🧾 Submitting Transaction:", newTransaction);
