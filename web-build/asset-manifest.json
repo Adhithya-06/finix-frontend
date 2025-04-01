@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.js": "/static/js/main.c1cc5d23.js",
+    "static/js/221.b1572ebd.js": "/static/js/221.b1572ebd.js",
+    "static/media/Ionicons.ttf": "/static/media/Ionicons.9b6b1954a5eb6efeaf11.ttf",
+    "static/media/finix-logo.png": "/static/media/finix-logo.922871731a91584d5c61.png",
+    "favicon.ico": "/favicon.ico",
+    "index.html": "/index.html",
+    "favicon-32.png": "/favicon-32.png",
+    "manifest.json": "/manifest.json",
+    "favicon-16.png": "/favicon-16.png",
+    "serve.json": "/serve.json",
+    "main.c1cc5d23.js.map": "/static/js/main.c1cc5d23.js.map",
+    "221.b1572ebd.js.map": "/static/js/221.b1572ebd.js.map"
+  },
+  "entrypoints": [
+    "static/js/221.b1572ebd.js",
+    "static/js/main.c1cc5d23.js"
+  ]
+}

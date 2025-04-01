@@ -97,7 +97,7 @@ useFocusEffect(
 
 const fetchTransactions = async () => {
     try {
-        const response = await axios.get("http://localhost:8000/transactions");
+        const response = await axios.get("https://finix-app.onrender.com/transactions");
         setTransactions(response.data); //  Update state with latest transactions
     } catch (error) {
         console.error("Error fetching transactions:", error);

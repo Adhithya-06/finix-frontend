@@ -11,7 +11,7 @@ const InsightsScreen = ({ navigation }) => {
     useEffect(() => {
         const fetchInsights = async () => {
             try {
-                const response = await axios.get("http://localhost:8000/ai/insights");
+                const response = await axios.get("https://finix-app.onrender.com/ai/insights");
                 setAiInsights(response.data);
             } catch (err) {
                 setError('Failed to load insights. Please try again.');

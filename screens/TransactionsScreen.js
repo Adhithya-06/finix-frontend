@@ -39,7 +39,7 @@ const TransactionsScreen = () => {
   useEffect(() => {
     const loadTransactions = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/transactions");
+        const response = await axios.get("https://finix-app.onrender.com/transactions");
   
         if (response.status === 200) {
           setTransactions(response.data); // Load transactions from backend
@@ -58,7 +58,7 @@ const TransactionsScreen = () => {
   // Delete a transaction
   const deleteTransaction = async (transactionId) => {
     try {
-      const response = await fetch(`http://localhost:8000/delete_transaction/${transactionId}`, { 
+      const response = await fetch(`https://finix-app.onrender.com/delete_transaction/${transactionId}`, { 
 
             method: "DELETE",
         });
@@ -79,7 +79,7 @@ const TransactionsScreen = () => {
 //  Add fetchTransactions function RIGHT HERE (after deleteTransaction)
 const fetchTransactions = async () => {
   try {
-    const response = await fetch("http://localhost:8000/transactions");
+    const response = await fetch("https://finix-app.onrender.com/transactions");
     const data = await response.json();
     setTransactions(data); // ✅ Updates state with the latest transactions
   } catch (error) {
@@ -120,7 +120,7 @@ useEffect(() => {
     console.log("📝 Attempting to save transaction:", updatedTransaction);
   
     try {
-      const response = await fetch(`http://localhost:8000/update_transaction/${updatedTransaction.id}`, { 
+      const response = await fetch(`https://finix-app.onrender.com/update_transaction/${updatedTransaction.id}`, { 
 
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -172,7 +172,7 @@ useEffect(() => {
     console.log("🧾 Submitting Transaction:", newTransaction);
 
     try {
-      const response = await fetch("http://localhost:8000/add_transaction", { 
+      const response = await fetch("https://finix-app.onrender.com/add_transaction", { 
 
         method: "POST",
         headers: { "Content-Type": "application/json" },
