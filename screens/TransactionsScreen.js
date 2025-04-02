@@ -39,22 +39,25 @@ const TransactionsScreen = () => {
   
   //  Load Transactions from AsyncStorage when the screen opens
   useEffect(() => {
-    const loadEmailAndTransactions = async () => {
+    const fetchTransactions = async () => {
       try {
-        const storedEmail = await AsyncStorage.getItem("user_email");
-        if (storedEmail) {
-          setLoggedInEmail(storedEmail);
-          await fetchTransactions(storedEmail); // ✅ now fetches based on email
-        } else {
-          Alert.alert("Error", "No logged-in email found.");
+        const email = await AsyncStorage.getItem("userEmail"); // 👈 Fetch logged-in user email
+        if (!email) {
+          console.warn("⚠️ No user email found in AsyncStorage.");
+          return;
         }
+  
+        const response = await fetch(`https://finix-backend.onrender.com/transactions?email=${email}`);
+        const data = await response.json();
+        setTransactions(data);
       } catch (error) {
-        console.error("❌ Error loading email or transactions:", error);
+        console.error("❌ Error fetching transactions:", error);
       }
     };
   
-    loadEmailAndTransactions();
-  }, []);  //ADDED
+    fetchTransactions(); // 👈 Call it here
+  }, []);
+   //ADDED LATEST
   
   
   
@@ -80,12 +83,14 @@ const TransactionsScreen = () => {
 
   const fetchTransactions = async (email) => {
     try {
-      const response = await axios.get(`https://finix-backend.onrender.com/transactions?email=${email}`);
-      setTransactions(response.data);
+      const response = await fetch(`https://finix-backend.onrender.com/transactions?email=${email}`);
+      const data = await response.json();
+      setTransactions(data); // ✅ Show only logged-in user's data
     } catch (error) {
-      console.error("❌ Error fetching transactions:", error);
+      console.error("Error fetching transactions:", error);
     }
-  };   //ADDED
+  };
+    //ADDED
   
 
 
