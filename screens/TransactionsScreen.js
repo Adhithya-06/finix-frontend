@@ -39,25 +39,22 @@ const TransactionsScreen = () => {
   
   //  Load Transactions from AsyncStorage when the screen opens
   useEffect(() => {
-    const fetchTransactions = async () => {
+    const loadEmailAndTransactions = async () => {
       try {
-        const email = await AsyncStorage.getItem("userEmail"); // 👈 Fetch logged-in user email
-        if (!email) {
-          console.warn("⚠️ No user email found in AsyncStorage.");
-          return;
+        const storedEmail = await AsyncStorage.getItem("user_email");
+        if (storedEmail) {
+          setLoggedInEmail(storedEmail);
+          await fetchTransactions(storedEmail); // ✅ now fetches based on email
+        } else {
+          Alert.alert("Error", "No logged-in email found.");
         }
-  
-        const response = await fetch(`https://finix-backend.onrender.com/transactions?email=${email}`);
-        const data = await response.json();
-        setTransactions(data);
       } catch (error) {
-        console.error("❌ Error fetching transactions:", error);
+        console.error("❌ Error loading email or transactions:", error);
       }
     };
   
-    fetchTransactions(); // 👈 Call it here
-  }, []);
-   //ADDED LATEST
+    loadEmailAndTransactions();
+  }, []);  //ADDED
   
   
   
