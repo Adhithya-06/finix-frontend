@@ -13,6 +13,8 @@ import axios from "axios"; // Import axios to send API requests
 
 
 const TransactionsScreen = () => {
+  const [loggedInEmail, setLoggedInEmail] = useState(null); //ADDED
+
   const [selectedYear, setSelectedYear] = useState(moment().year());
   const [selectedMonth, setSelectedMonth] = useState(moment().month() + 1); // Months are 0-indexed in JS
   const [selectedDay, setSelectedDay] = useState(moment().date());
@@ -37,23 +39,24 @@ const TransactionsScreen = () => {
   
   //  Load Transactions from AsyncStorage when the screen opens
   useEffect(() => {
-    const loadTransactions = async () => {
+    const loadEmailAndTransactions = async () => {
       try {
-        const response = await axios.get("https://finix-backend.onrender.com/transactions");
-  
-        if (response.status === 200) {
-          console.log("✅ Received transactions from backend:", response.data); // 👈 Add this
-          setTransactions(response.data);
+        const storedEmail = await AsyncStorage.getItem("user_email");
+        if (storedEmail) {
+          setLoggedInEmail(storedEmail);
+          await fetchTransactions(storedEmail); // ✅ now fetches based on email
         } else {
-          console.error("❌ Error fetching transactions:", response.statusText);
+          Alert.alert("Error", "No logged-in email found.");
         }
       } catch (error) {
-        console.error("❌ Network error while fetching transactions:", error);
+        console.error("❌ Error loading email or transactions:", error);
       }
     };
   
-    loadTransactions();
-  }, []);
+    loadEmailAndTransactions();
+  }, []);  //ADDED
+  
+  
   
   
 
@@ -75,16 +78,15 @@ const TransactionsScreen = () => {
   };
 
 
-//  Add fetchTransactions function RIGHT HERE (after deleteTransaction)
-const fetchTransactions = async () => {
-  try {
-    const response = await fetch("https://finix-backend.onrender.com/transactions");
-    const data = await response.json();
-    setTransactions(data); // ✅ Updates state with the latest transactions
-  } catch (error) {
-    console.error("Error fetching transactions:", error);
-  }
-};
+  const fetchTransactions = async (email) => {
+    try {
+      const response = await axios.get(`https://finix-backend.onrender.com/transactions?email=${email}`);
+      setTransactions(response.data);
+    } catch (error) {
+      console.error("❌ Error fetching transactions:", error);
+    }
+  };   //ADDED
+  
 
 
 //  Now update useEffect() to fetch transactions when the page loads
