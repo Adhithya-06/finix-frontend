@@ -27,7 +27,6 @@ const TransactionsScreen = () => {
   const [forceUpdate, setForceUpdate] = useState(0);
   const [selectedFilterCategory, setSelectedFilterCategory] = useState(""); // Stores selected category for filtering
   const [customCategory, setCustomCategory] = useState(""); // Stores manually entered category
-  const [loggedInEmail, setLoggedInEmail] = useState('');
 
   
 
@@ -35,80 +34,53 @@ const TransactionsScreen = () => {
     return `${selectedYear}-${selectedMonth.toString().padStart(2, "0")}-${selectedDay.toString().padStart(2, "0")}`;
   };
   
-
-
-
-  useEffect(() => {
-    const loadUserAndTransactions = async () => {
-      try {
-        const email = await AsyncStorage.getItem("email"); // or "userEmail", based on your app
-        if (email) {
-          setLoggedInEmail(email);
-  
-          const response = await axios.get(`https://finix-backend.onrender.com/transactions?email=${email}`);
-          if (response.status === 200) {
-            setTransactions(response.data);
-          }
-        }
-      } catch (error) {
-        console.error("Failed to load email or transactions:", error);
-      }
-    };
-  
-    loadUserAndTransactions();
-  }, []);
-  
-
   
   //  Load Transactions from AsyncStorage when the screen opens
   useEffect(() => {
     const loadTransactions = async () => {
       try {
-        const response = await axios.get(`https://finix-backend.onrender.com/transactions?email=${loggedInEmail}`);
-
+        const response = await axios.get("https://finix-backend.onrender.com/transactions");
   
         if (response.status === 200) {
-          setTransactions(response.data); // Load transactions from backend
+          console.log("✅ Received transactions from backend:", response.data); // 👈 Add this
+          setTransactions(response.data);
         } else {
-          console.error("Error fetching transactions:", response.statusText);
+          console.error("❌ Error fetching transactions:", response.statusText);
         }
       } catch (error) {
-        console.error("Error fetching transactions:", error);
+        console.error("❌ Network error while fetching transactions:", error);
       }
     };
   
     loadTransactions();
   }, []);
   
+  
 
   // Delete a transaction
   const deleteTransaction = async (transactionId) => {
     try {
       const response = await fetch(`https://finix-backend.onrender.com/delete_transaction/${transactionId}`, { 
+        method: "DELETE",
+      });
 
-            method: "DELETE",
-        });
+      if (!response.ok) {
+        throw new Error("Failed to delete transaction");
+      }
 
-        if (!response.ok) {
-            throw new Error("Failed to delete transaction ");
-        }
-
-        // Remove from local state AFTER successful deletion from database
-        setTransactions(transactions.filter((t) => t.id !== transactionId));
-
-        console.log("Transaction deleted successfully!");
+      setTransactions(transactions.filter((t) => t.id !== transactionId));
     } catch (error) {
-        console.error("Error deleting transaction:", error);
+      console.error("Error deleting transaction:", error);
     }
-};
+  };
+
 
 //  Add fetchTransactions function RIGHT HERE (after deleteTransaction)
 const fetchTransactions = async () => {
   try {
-    const response = await axios.get(`https://finix-backend.onrender.com/transactions?email=${loggedInEmail}`);
-    if (response.status === 200) {
-      setTransactions(response.data);
-    }
+    const response = await fetch("https://finix-backend.onrender.com/transactions");
+    const data = await response.json();
+    setTransactions(data); // ✅ Updates state with the latest transactions
   } catch (error) {
     console.error("Error fetching transactions:", error);
   }
@@ -148,32 +120,22 @@ useEffect(() => {
   
     try {
       const response = await fetch(`https://finix-backend.onrender.com/update_transaction/${updatedTransaction.id}`, { 
-
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updatedTransaction),
       });
-  
-      if (!response.ok) {
-        throw new Error(`❌ Failed to update transaction: ${response.status}`);
-      }
-  
-      console.log("✅ Transaction successfully updated in backend!");
-  
-      // ✅ Update frontend state immediately
-      setTransactions((prevTransactions) =>
-        prevTransactions.map((transaction) =>
-          transaction.id === updatedTransaction.id ? updatedTransaction : transaction
-        )
+
+      if (!response.ok) throw new Error(`Failed to update transaction`);
+
+      setTransactions((prev) =>
+        prev.map((t) => (t.id === updatedTransaction.id ? updatedTransaction : t))
       );
-  
-      console.log("✅ Transactions updated in frontend state:", transactions);
-  
+
       Alert.alert("Success", "Transaction Updated Successfully!");
     } catch (error) {
-      console.error("⚠️ Error saving transaction:", error);
+      console.error("Error saving transaction:", error);
     }
-  
+
     setEditIndex(null);
   };
   
@@ -191,11 +153,11 @@ useEffect(() => {
   
     const newTransaction = {
       date: formatSelectedDate(),
-      category: finalCategory,
+      category: finalCategory, // Save either selected category or manually entered category
       amount: parseFloat(amount),
-      user_email: loggedInEmail,
+      user_email: loggedInEmail, 
+      
     };
-    
     console.log("🧾 Submitting Transaction:", newTransaction);
 
     try {
