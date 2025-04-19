@@ -14,7 +14,7 @@ import DashboardScreen from './screens/DashboardScreen';
 import TransactionsScreen from './screens/TransactionsScreen';
 import InsightsScreen from './screens/InsightsScreen';
 import SmartBudgetingScreen from './screens/SmartBudgetingScreen';
-import SettingsScreen from './screens/SettingsScreen';
+import ExportsSettingsScreen from './screens/SettingsScreen';
 import AuthScreen from './screens/AuthScreen'; // Login & Signup Screen
 import Toast from 'react-native-toast-message';
 
@@ -70,7 +70,7 @@ const App = () => {
                   iconName = 'bar-chart';
                 } else if (route.name === 'Smart Budgeting') { 
                   iconName = 'wallet';
-                } else if (route.name === 'Settings') { 
+                } else if (route.name === 'Exports & Settings') { 
                   iconName = 'settings';   // ✅ Newly Added Icon   
                 } else if (route.name === 'Sign Out') {
                   iconName = 'log-out';
@@ -92,7 +92,7 @@ const App = () => {
             <Drawer.Screen name="Transactions" component={TransactionsScreen} />
             <Drawer.Screen name="Insights" component={InsightsScreen} />
             <Drawer.Screen name="Smart Budgeting" component={SmartBudgetingScreen} />
-            <Drawer.Screen name="Settings" component={SettingsScreen} /> 
+            <Drawer.Screen name="Exports & Settings" component={ExportsSettingsScreen} /> 
             {/*  Sign Out Button in Hamburger Menu */}
             <Drawer.Screen
               name="Sign Out"
