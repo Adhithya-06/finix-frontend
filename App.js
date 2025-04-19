@@ -14,7 +14,7 @@ import DashboardScreen from './screens/DashboardScreen';
 import TransactionsScreen from './screens/TransactionsScreen';
 import InsightsScreen from './screens/InsightsScreen';
 import SmartBudgetingScreen from './screens/SmartBudgetingScreen';
-import ExportsSettingsScreen from './screens/SettingsScreen';
+import ExportsSettingsScreen from './screens/ExportsSettingsScreen';
 import AuthScreen from './screens/AuthScreen'; // Login & Signup Screen
 import Toast from 'react-native-toast-message';
 

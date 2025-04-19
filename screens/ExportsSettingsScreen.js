@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
   importButtonText: { color: "white", fontWeight: "bold" },
 });
 
-export default SettingsScreen;
+export default ExportsSettingsScreen;
 
 
 
