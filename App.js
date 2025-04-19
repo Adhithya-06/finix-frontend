@@ -70,7 +70,7 @@ const App = () => {
                   iconName = 'bar-chart';
                 } else if (route.name === 'Smart Budgeting') { 
                   iconName = 'wallet';
-                } else if (route.name === 'Exports & Settings') { 
+                } else if (route.name === 'Settings') { 
                   iconName = 'settings';   // ✅ Newly Added Icon   
                 } else if (route.name === 'Sign Out') {
                   iconName = 'log-out';
@@ -92,7 +92,7 @@ const App = () => {
             <Drawer.Screen name="Transactions" component={TransactionsScreen} />
             <Drawer.Screen name="Insights" component={InsightsScreen} />
             <Drawer.Screen name="Smart Budgeting" component={SmartBudgetingScreen} />
-            <Drawer.Screen name="Exports & Settings" component={ExportsSettingsScreen} /> 
+            <Drawer.Screen name="Settings" component={SettingsScreen} /> 
             {/*  Sign Out Button in Hamburger Menu */}
             <Drawer.Screen
               name="Sign Out"
