@@ -14,7 +14,7 @@ import DashboardScreen from './screens/DashboardScreen';
 import TransactionsScreen from './screens/TransactionsScreen';
 import InsightsScreen from './screens/InsightsScreen';
 import SmartBudgetingScreen from './screens/SmartBudgetingScreen';
-import ExportsSettingsScreen from './screens/ExportsSettingsScreen';
+import ExportsSettingsScreen from './screens/ImportsSettingsScreen';
 import AuthScreen from './screens/AuthScreen'; // Login & Signup Screen
 import Toast from 'react-native-toast-message';
 
@@ -92,7 +92,7 @@ const App = () => {
             <Drawer.Screen name="Transactions" component={TransactionsScreen} />
             <Drawer.Screen name="Insights" component={InsightsScreen} />
             <Drawer.Screen name="Smart Budgeting" component={SmartBudgetingScreen} />
-            <Drawer.Screen name="Exports & Settings" component={ExportsSettingsScreen} /> 
+            <Drawer.Screen name="Imports & Settings" component={ExportsSettingsScreen} /> 
             {/*  Sign Out Button in Hamburger Menu */}
             <Drawer.Screen
               name="Sign Out"
