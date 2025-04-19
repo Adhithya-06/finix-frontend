@@ -4,7 +4,7 @@ import * as DocumentPicker from "expo-document-picker";
 import * as WebBrowser from "expo-web-browser";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const ExportsSettingsScreen = () => {
+const ImportsSettingsScreen = () => {
   const [notificationsEnabled, setNotificationsEnabled] = useState(null); // Start as null
   const [importedFiles, setImportedFiles] = useState([]);
 
@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
   importButtonText: { color: "white", fontWeight: "bold" },
 });
 
-export default ExportsSettingsScreen;
+export default ImportsSettingsScreen;
 
 
 
